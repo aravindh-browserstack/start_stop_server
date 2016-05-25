@@ -45,4 +45,9 @@ operation: cleanup
 
 Cleans up the cookies from the last session.
 
+## Running the server
+
+```bash
+rackup -p <port>
+```
 
