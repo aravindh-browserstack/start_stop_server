@@ -31,6 +31,9 @@ module Browser
 
     def stop
       system('osascript -e "tell application \"'+@browsertype+'\" to quit"')
+      pid = IO.popen("pidof "+@browsertype).read().chomp
+      if pid != ""
+        system("kill -9 "+pid)
       system("sudo networksetup -setwebproxystate Wi-Fi off")
     end
 
