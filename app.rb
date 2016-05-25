@@ -34,7 +34,7 @@ post '/browsers' do
     end
     server.start(data["browser"],data["url"],opts)
     {status: "success"}.to_json
-  rescue RuntimeError
+  rescue ArgumentError
     halt 404, "Browser type not found"
   end   
 end
