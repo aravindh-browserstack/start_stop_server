@@ -1,15 +1,9 @@
 module Browser
   class BrowserClass
     def initialize(browser_name,url=nil,options={})
-      proxy_server = nil
-      proxy_port = nil
-      @browsertype = browser_name
-      if options.include?("proxy_server".to_sym)
-        proxy_server = options["proxy_server".to_sym]
-      end
-      if options.include?("proxy_port".to_sym)
-        proxy_port = options["proxy_port".to_sym]
-      end
+      @browsername = browser_name
+      proxy_server = options[:proxy_server]
+      proxy_port = options[:proxy_port]
       unless (proxy_server.nil? || proxy_port.nil?)
         system("sudo networksetup -setwebproxystate Wi-Fi on")
         system("sudo networksetup -setwebproxy Wi-Fi "+proxy_server+" "+proxy_port)
@@ -31,9 +25,10 @@ module Browser
 
     def stop
       system('osascript -e "tell application \"'+@browsertype+'\" to quit"')
-      pid = IO.popen("pidof "+@browsertype).read().chomp
+      pid = IO.popen("pidof "+@browsername).read().chomp
       if pid != ""
         system("kill -9 "+pid)
+      end
       system("sudo networksetup -setwebproxystate Wi-Fi off")
     end
 
@@ -59,7 +54,7 @@ module Browser
           system("rm -rf ~/Library/Cookies/*")
           system("rm -rf ~/Library/Preferences/com.apple.Safari*")
           system("rm -rf ~/Library/\"Internet Plug-ins\"/*")
-        end
+      end
     end
   end
 end

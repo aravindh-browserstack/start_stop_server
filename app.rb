@@ -14,14 +14,8 @@ post '/browsers' do
     halt 400, "Browser type not found"
   end
   begin
-    proxy_server = nil
-    proxy_port = nil
-    if data.include?("proxy_server")
-      proxy_server = data["proxy_server"]
-    end
-    if data.include?("proxy_port")
-      proxy_port = data["proxy_port"]
-    end
+    proxy_server = data["proxy_server"]
+    proxy_port = data["proxy_port"]
     if proxy_port != nil && proxy_server == nil
       halt 404, "both proxy server & port are needed"
     end
@@ -30,7 +24,7 @@ post '/browsers' do
     end
     opts = {}
     if proxy_server && proxy_port
-      opts = {"proxy_server":proxy_server,"proxy_port": proxy_port}
+      opts = {proxy_server: proxy_server,proxy_port: proxy_port}
     end
     server.start(data["browser"],data["url"],opts)
     {status: "success"}.to_json
