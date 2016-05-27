@@ -25,14 +25,14 @@ module Browser
 
     def stop
       system('osascript -e "tell application \"'+@browsertype+'\" to quit"')
-      pid = IO.popen("pidof "+@browsername).read().chomp
+      pid = IO.popen("/usr/local/bin/pidof "+@browsername).read().chomp
       if pid != ""
         system("kill -9 "+pid)
       end
       system("sudo networksetup -setwebproxystate Wi-Fi off")
     end
 
-    def cleanup
+    def cleanup 
       case @browsertype
         when "Firefox"
           system("rm -rf ~/Library/\"Application Support\"/Firefox/*")
@@ -45,15 +45,16 @@ module Browser
           system("rm -rf ~/Library/Caches/Google/Chrome/*")
         when "Safari"
           system("rm -rf ~/Library/Caches/Metadata/Safari/*")
-          system("rm -rf ~/Library/\"Application Support\"/Spigot/Safari/*")
+          system("rm -rf \"~/Library/Application Support/Spigot/Safari/*\"")
           system("rm -rf ~/Library/Caches/com.apple.Safari*")
-          system("rm -rf ~/Library/Caches/com.apple.commerce.safari/*")
+          system("rm -rf ~/Library/Caches/com.apple.commerce.safari*")
           system("rm -rf ~/Library/Safari/*")
-          system("rm -rf ~/Library/\"Saved Application State\"/com.apple.Safari.savedState*")
-          system("rm -rf ~/Library/WebKit/com.apple.Safari/*")
+          system("rm -rf \"~/Library/Saved Application State/com.apple.Safari.savedState*\"")
+          system("rm -rf ~/Library/WebKit/com.apple.Safari*")
           system("rm -rf ~/Library/Cookies/*")
           system("rm -rf ~/Library/Preferences/com.apple.Safari*")
-          system("rm -rf ~/Library/\"Internet Plug-ins\"/*")
+          system("rm -rf \"~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.apple.safari*\"")
+          system("rm -rf \"~/Library/Internet Plug-ins/*\"")
       end
     end
   end
