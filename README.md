@@ -50,7 +50,7 @@ Cleans up the cookies from the last session.
 ```bash
 rackup -p <port>
 ```
-## Plugging into launchd
+## Plugging into launchd ( Mac OSX )
 
 ```bash
 cp ./startstopserver.plist ~/Library/LaunchAgents/
